@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>焼酎検索 | 本格焼酎・泡盛データベース</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">🍶</span>
+        <div>
+          <h1>焼酎検索</h1>
+          <p class="tagline">本格焼酎・泡盛データベース</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <!-- 検索バー -->
+    <section class="search-section">
+      <div class="search-wrapper">
+        <div class="search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+          <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="銘柄名、蔵元、産地、原料などで検索..."
+            autocomplete="off"
+          >
+          <button id="clearSearch" class="clear-btn" title="クリア" hidden>✕</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="content-layout">
+      <!-- フィルターパネル -->
+      <aside class="filter-panel">
+        <div class="filter-header">
+          <h2>絞り込み</h2>
+          <button id="resetFilters" class="reset-btn">リセット</button>
+        </div>
+
+        <div class="filter-group">
+          <h3 class="filter-label">原料</h3>
+          <div class="filter-options" id="typeFilters">
+            <label class="filter-chip active">
+              <input type="radio" name="type" value="all" checked> すべて
+            </label>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <h3 class="filter-label">産地</h3>
+          <select id="prefectureFilter" class="filter-select">
+            <option value="all">すべての産地</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <h3 class="filter-label">アルコール度数</h3>
+          <div class="range-inputs">
+            <input type="number" id="minAlcohol" class="range-input" placeholder="下限" min="0" max="60">
+            <span class="range-sep">〜</span>
+            <input type="number" id="maxAlcohol" class="range-input" placeholder="上限" min="0" max="60">
+            <span class="range-unit">度</span>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <h3 class="filter-label">タグ</h3>
+          <div class="filter-tags" id="tagFilters">
+            <button class="tag-btn active" data-tag="all">すべて</button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- 結果エリア -->
+      <div class="results-area">
+        <!-- ソート・件数 -->
+        <div class="results-toolbar">
+          <span class="results-count" id="resultsCount">読み込み中...</span>
+          <div class="sort-wrapper">
+            <label for="sortSelect" class="sort-label">並び順:</label>
+            <select id="sortSelect" class="sort-select">
+              <option value="rating_desc">評価が高い順</option>
+              <option value="name">名前順</option>
+              <option value="price_asc">価格が安い順</option>
+              <option value="price_desc">価格が高い順</option>
+              <option value="alcohol_asc">度数が低い順</option>
+              <option value="alcohol_desc">度数が高い順</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- カードグリッド -->
+        <div class="cards-grid" id="cardsGrid">
+          <div class="loading">
+            <div class="spinner"></div>
+            <p>読み込み中...</p>
+          </div>
+        </div>
+
+        <!-- 空の状態 -->
+        <div class="empty-state" id="emptyState" hidden>
+          <div class="empty-icon">🔍</div>
+          <h3>見つかりませんでした</h3>
+          <p>検索条件を変えて再試行してください。</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 詳細モーダル -->
+  <div class="modal-overlay" id="modalOverlay" hidden>
+    <div class="modal" id="modal" role="dialog" aria-modal="true">
+      <button class="modal-close" id="modalClose" aria-label="閉じる">✕</button>
+      <div class="modal-content" id="modalContent"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
